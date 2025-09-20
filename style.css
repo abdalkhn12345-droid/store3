@@ -159,19 +159,6 @@ body {
 /* ...existing code... */
 
 /* === Media Queries لتكون متجاوبة === */
-@media (max-width: 1024px) {
-    .carbrands {
-        grid-template-columns: repeat(2, 1fr);
-        margin-left: 0;
-    }
-    .car {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    .welcome {
-        margin-left: 0;
-    }
-}
 @media (max-width: 768px) {
     .carbrands {
         grid-template-columns: 1fr;
@@ -185,10 +172,24 @@ body {
         flex-direction: row;
         justify-content: space-around;
         position: relative;
+        padding: 10px 0;
+        gap: 0;
+        text-align: center;
+    }
+    .Sidemenu h1 {
+        display: none; /* إخفاء العنوان لتوفير مساحة */
+    }
+    .Sidemenu a {
+        padding: 10px 5px;
+        font-size: 16px;
+        border-radius: 0;
+        flex: 1;
+        margin: 0 2px;
+        min-width: 60px;
     }
     .welcome {
         font-size: 24px;
+        margin-left: 0;
     }
 }
-
 /* ...existing code... */
