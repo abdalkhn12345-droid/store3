@@ -22,35 +22,112 @@
         </div>
 
         <div class="carbrands">
-            <div class="car Mercedes">
+              <div class="car" data-name="Mercedes" data-details="سيارة ألمانية فاخرة، محرك قوي، تصميم أنيق." data-price="60,000$">
                 <img src="Mercedes.png" alt="Mercedes">
                 <a href="#">Mercedes</a>
             </div>
-            <div class="car Audi">
+            <div class="car" data-name="Audi" data-details="سيارة ألمانية، أداء رياضي، تقنيات حديثة." data-price="55,000$">
                 <img src="audi.avif" alt="Audi">
                 <a href="#">Audi</a>
             </div>
-            <div class="car Rangrover">
+            <div class="car" data-name="Rangrover" data-details="سيارة دفع رباعي بريطانية، فخامة وقوة." data-price="90,000$">
                 <img src="Rangrover.png" alt="Rangrover">
                 <a href="#">Rangrover</a>
             </div>
-            <div class="car Ferrari">
+            <div class="car" data-name="Ferrari" data-details="سيارة رياضية إيطالية، سرعة عالية وتصميم مميز." data-price="250,000$">
                 <img src="ferrari.png" alt="Ferrari">
                 <a href="#">Ferrari</a>
             </div>
-            <div class="car kia">
+            <div class="car" data-name="Kia" data-details="سيارة كورية اقتصادية، اعتمادية عالية." data-price="25,000$">
                 <img src="KIA2025.jpg" alt="kia">
                 <a href="#">Kia</a>
             </div>
-            <div class="car nissan">
+            <div class="car" data-name="Nissan" data-details="سيارة يابانية، اقتصادية وعملية." data-price="28,000$">
                 <img src="NISSAN.JPG" alt="nissan">
                 <a href="#">Nissan</a>
             </div>
-            <div class="car BMW">
+            <div class="car" data-name="BMW" data-details="سيارة ألمانية، أداء رياضي وفخامة." data-price="65,000$">
                 <img src="BMW.jpg" alt="BMW">
                 <a href="#">BMW</a>
             </div>
         </div>
     </div>
+    <div id="carModal" class="modal">
+         <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalCarName"></h2>
+            <p id="modalCarDetails"></p>
+            <p id="modalCarPrice"></p>
+                <button id="buyBtn" class="buy-btn">شراء الآن</button>
+
+        </div>
+    </div>
+    <div id="phoneModal" class="modal">
+    <div class="modal-content">
+        <span class="close-phone">&times;</span>
+        <h3>يرجى إدخال رقمك الشخصي للتواصل مع قسم المبيعات</h3>
+        <input type="text" id="userPhone" placeholder="أدخل رقمك هنا" style="width:90%;padding:10px;font-size:16px;margin:15px 0;border-radius:8px;border:1px solid #ccc;">
+        <button id="confirmBuyBtn" class="buy-btn">تأكيد الشراء</button>
+    </div>
+</div>
+    
+
+    
+    <!-- أضف هذا في <script> -->
+<script>
+    let selectedCarName = "";
+
+    document.querySelectorAll('.car img').forEach(function(img) {
+        img.addEventListener('click', function() {
+            var carDiv = img.parentElement;
+            document.getElementById('modalCarName').textContent = carDiv.getAttribute('data-name');
+            document.getElementById('modalCarDetails').textContent = carDiv.getAttribute('data-details');
+            document.getElementById('modalCarPrice').textContent = "السعر العالمي التقريبي: " + carDiv.getAttribute('data-price');
+            document.getElementById('carModal').style.display = 'block';
+            document.getElementById('buyBtn').setAttribute('data-car', carDiv.getAttribute('data-name'));
+        });
+    });
+
+    // إغلاق نافذة التفاصيل
+    document.querySelector('.modal .close').onclick = function() {
+        document.getElementById('carModal').style.display = 'none';
+    };
+    // إغلاق نافذة إدخال الرقم
+    document.querySelector('.close-phone').onclick = function() {
+        document.getElementById('phoneModal').style.display = 'none';
+    };
+    // إغلاق أي نافذة عند الضغط خارجها
+    window.onclick = function(event) {
+        var carModal = document.getElementById('carModal');
+        var phoneModal = document.getElementById('phoneModal');
+        if (event.target == carModal) carModal.style.display = "none";
+        if (event.target == phoneModal) phoneModal.style.display = "none";
+    };
+
+    // عند الضغط على شراء: افتح نافذة إدخال الرقم
+    document.getElementById('buyBtn').onclick = function() {
+        selectedCarName = this.getAttribute('data-car');
+        document.getElementById('carModal').style.display = 'none';
+        document.getElementById('userPhone').value = "";
+        document.getElementById('phoneModal').style.display = 'block';
+    };
+
+    // عند تأكيد الشراء: أرسل رسالة واتساب
+    document.getElementById('confirmBuyBtn').onclick = function() {
+        var userPhone = document.getElementById('userPhone').value.trim();
+        if (userPhone === "") {
+            alert("يرجى إدخال رقمك الشخصي أولاً.");
+            return;
+        }
+        var phone = "993235106"; // رقمك بدون مفتاح الدولة
+        var message = encodeURIComponent(
+            "يرغب شخص بشراء سيارة: " + selectedCarName +
+            "\nرقم التواصل الخاص به: " + userPhone +
+            "\nيرجى التواصل معه من قسم المبيعات."
+        );
+        window.open("https://wa.me/963" + phone + "?text=" + message, "_blank");
+        document.getElementById('phoneModal').style.display = 'none';
+    };
+    </script>
 </body>
 </html>
